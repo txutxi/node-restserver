@@ -1,47 +1,36 @@
-require('./config/config')
+require('./config/config');
 
-const express = require('express')
-const app = express()
-
-const bodyParser = require('body-parser')
-    // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-    // parse application/json
-app.use(bodyParser.json())
-
-app.get('/usuario', (req, res) => {
-    res.json('get Usuario');
-});
-
-app.post('/usuario', (req, res) => {
-
-    let body = req.body;
-
-    if (body.nombre === undefined) {
-        res.status(400).json({
-            ok: false,
-            mensaje: 'El nombre es necesario'
-        })
-    } else {
-        res.json({
-            persona: body
-        });
-    }
+const colors = require('colors');
+const express = require('express');
+const mongoose = require('mongoose');
 
 
-});
+const app = express();
 
-app.put('/usuario/:id', (req, res) => {
-    let id = req.params.id;
-    res.json({
-        id
+const bodyParser = require('body-parser');
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+
+app.use(bodyParser.json());
+
+app.use(require('./routes/usuario'));
+
+
+
+mongoose.connect(process.env.urlDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+    (err, res) => {
+
+        if (err) throw err;
+        console.log('BD ONLINE'.green);
     });
-});
 
-app.delete('/usuario', (req, res) => {
-    res.json('delete Usuario');
-});
+// await mongoose.connect('mongodb://localhost/my_database', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
+
 
 app.listen(process.env.PORT, () => {
-    console.log(`Escuchando por el puerto: ${process.env.PORT}`);
-})
+    console.log(`Escuchando por el puerto: ${process.env.PORT}`.green);
+});
