@@ -7,7 +7,24 @@ process.env.PORT = process.env.PORT || 7226;
    ENTORNO (desarrollo / produccion)
 ---------------------------------- */
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'dev'
+process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+
+
+/* ---------------------------------
+   Vencimiento de Token
+    60 Segundos
+    60 Minutos
+    24 Horas
+    30 Días
+---------------------------------- */
+process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
+
+/* ---------------------------------
+   Semilla del Token
+---------------------------------- */
+process.env.SEED = process.env.SEED || 'este-es-el-seed-desarrollo';
+
+
 
 
 /* ---------------------------------
