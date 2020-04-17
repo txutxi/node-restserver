@@ -1,10 +1,12 @@
 require('./config/config');
 
 const colors = require('colors');
+const express = require('express');
 
 const mongoose = require('mongoose');
 
-const express = require('express');
+const path = require('path');
+
 
 
 const app = express();
@@ -19,11 +21,14 @@ app.use(bodyParser.json());
 // configuracion global del routes
 app.use(require('./routes/index'));
 
+//habilitar el public
+app.use(express.static(path.resolve(__dirname, '../public')));
+
+console.log(path.resolve(__dirname, '../public'));
 
 
 mongoose.connect(process.env.urlDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
     (err, res) => {
-
         if (err) throw err;
         console.log('BD ONLINE'.green);
     });
