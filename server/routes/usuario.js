@@ -8,7 +8,9 @@ const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticac
 
 const app = express();
 
-
+//______________________________________________________________________
+//OBTENER LISTADO DE USUARIOS (limite y desde)
+//______________________________________________________________________
 app.get('/usuario', verificaToken, (req, res) => {
 
     // return res.json({
@@ -47,6 +49,9 @@ app.get('/usuario', verificaToken, (req, res) => {
         });
 });
 
+//______________________________________________________________________
+//CREANDO UN USUARIO
+//______________________________________________________________________
 app.post('/usuario', [verificaToken, verificaAdmin_Role], function(req, res) {
 
     let body = req.body;
@@ -77,6 +82,9 @@ app.post('/usuario', [verificaToken, verificaAdmin_Role], function(req, res) {
 
 });
 
+//______________________________________________________________________
+//ACTUALIZANDO EL USUARIO
+//______________________________________________________________________
 app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
